@@ -2,3 +2,5 @@ DataProcessing/database.json
 DataProcessing/database_cnn
 data/*
 results/*
+article_retrieval/*
+FeatureExtractor/pre-trained/R101-Token.pth
