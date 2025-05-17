@@ -7,7 +7,7 @@ from PIL import Image
 import time
 import pickle
 import os
-
+from tqdm import tqdm
 
 class TokenExtractor():
     def __init__(self, model_path, device='cuda'):
@@ -16,7 +16,7 @@ class TokenExtractor():
         self.model.eval()
 
         self.transform = transforms.Compose([
-            transforms.Resize(1024),
+            transforms.Resize(1024, 1024),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                  std=[0.229, 0.224, 0.225])
@@ -45,34 +45,34 @@ class TokenExtractor():
         print(f'Extract the image in {end - start} seconds')
         return feature
     
+    from tqdm import tqdm
+
     @torch.no_grad()
     def extract_dataset(self, dataset, batch_size=1, num_workers=0, save_path=None):
         start = time.time()
-        cnt = 0
         loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+
         all_features = []
         all_paths = []
-        for images, paths in loader:
+
+        # Add progress bar
+        for images, paths in tqdm(loader, desc='Extracting features', unit='batch'):
             images = images.to(self.device)
             vecs = self._extract_multi_scale(images)
             all_features.append(vecs.cpu().numpy())
             all_paths.extend(paths)
-            cnt += 1
-            if cnt % 2 == 0:
-                end = time.time()
-                print(f'[INFO] Extracted a chunk of 2 images. Total: {end - start}. Avg: {(end - start) / 2} per image')
-                start = end
 
         all_features = np.vstack(all_features)
 
-        if save_path != None:
+        if save_path is not None:
             feature_dict = {
-                os.path.basename(path) : feature for feature, path in zip(all_features, all_paths)
+                os.path.basename(path): feature for feature, path in zip(all_features, all_paths)
             }
-
             self._save_features_to_file(feature_dict, save_path)
 
+        print(f'[INFO] Finished extracting features in {time.time() - start:.2f} seconds.')
         return all_features, all_paths
+
 
     def _extract_multi_scale(self, imgs):
         # imgs: (B, C, H, W)
