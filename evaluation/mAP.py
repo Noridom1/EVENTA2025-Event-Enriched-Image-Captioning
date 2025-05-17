@@ -8,6 +8,8 @@ def compute_average_precision(gt_id, retrieved_list):
     for i, retrieved_id in enumerate(retrieved_list):
         if retrieved_id == gt_id:
             ap = 1.0 / (i + 1)  # precision at the rank where the gt appears
+            if i != 0:
+                print(f'id: {gt_id}, rank: {i + 1}')
             break
     return ap  # 0.0 if gt not found
 
