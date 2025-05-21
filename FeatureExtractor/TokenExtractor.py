@@ -45,26 +45,38 @@ class TokenExtractor():
         print(f'Extract the image in {end - start} seconds')
         return feature
     
-    from tqdm import tqdm
 
     @torch.no_grad()
-    def extract_dataset(self, dataset, batch_size=1, num_workers=0, save_path=None):
+    def extract_dataset(self, dataset, batch_size=1, num_workers=0, start_batch=0, save_progess=50, save_path=None):
+    
         start = time.time()
         loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
 
         all_features = []
         all_paths = []
 
-        # Add progress bar
-        for images, paths in tqdm(loader, desc='Extracting features', unit='batch'):
+        for batch_idx, (images, paths) in enumerate(tqdm(loader, desc='Extracting features', unit='batch')):
+            if batch_idx < start_batch:
+                continue  # Skip this batch
+
             images = images.to(self.device)
             vecs = self._extract_multi_scale(images)
             all_features.append(vecs.cpu().numpy())
             all_paths.extend(paths)
 
+            # Save progress periodically
+            if save_path is not None and (batch_idx + 1) % save_progess == 0:
+                feats = np.vstack(all_features)
+                feature_dict = {
+                    os.path.basename(path): feature for feature, path in zip(feats, all_paths)
+                }
+                self._save_features_to_file(feature_dict, save_path)
+                print(f"[INFO] Saved after {batch_idx + 1} batches")
+
         all_features = np.vstack(all_features)
 
-        if save_path is not None:
+        # Final save
+        if save_path:
             feature_dict = {
                 os.path.basename(path): feature for feature, path in zip(all_features, all_paths)
             }
@@ -72,6 +84,7 @@ class TokenExtractor():
 
         print(f'[INFO] Finished extracting features in {time.time() - start:.2f} seconds.')
         return all_features, all_paths
+
 
 
     def _extract_multi_scale(self, imgs):

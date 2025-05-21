@@ -9,11 +9,11 @@ class CustomDataset(Dataset):
         super().__init__()
         self.transform = transform
         self.image_dir = image_dir
-        self.image_paths = [
+        self.image_paths = sorted([
             os.path.join(self.image_dir, image_name)
             for image_name in os.listdir(self.image_dir)
             if image_name.lower().endswith(('.jpg', '.png', '.jpeg'))
-        ]
+        ])
 
     def __len__(self):
         return len(self.image_paths)

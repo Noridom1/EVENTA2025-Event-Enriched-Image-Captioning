@@ -10,10 +10,22 @@ import json
 import random
 
 transform = transforms.Compose([
-    transforms.Lambda(lambda img: transforms.Resize((
-        random.randint(600, 1200),  # height
-        random.randint(600, 1200)   # width
-    ))(img)),
+    transforms.RandomResizedCrop(
+        size=800,             
+        scale=(0.8, 1.0),
+        ratio=(0.9, 1.1)
+    ),
+    transforms.Resize((
+        random.randint(600, 1400),
+        random.randint(600, 1400)
+    )),  # Resize to fixed size afterward
+    transforms.ColorJitter(
+        brightness=0.3,
+        contrast=0.3,
+        saturation=0.3,
+        hue=0.05
+    ),
+    transforms.GaussianBlur(kernel_size=(5, 5), sigma=(0.1, 2.0)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406],
                          std=[0.229, 0.224, 0.225])
@@ -41,7 +53,7 @@ def generate_test_set(image_dir, num_image, transform, save_dir):
 
 
 def load_images(image_dir, selected_images):
-    return [Image.open(os.path.join(image_dir, selected_image)) for selected_image in selected_images]
+    return [Image.open(os.path.join(image_dir, selected_image)).convert('RGB') for selected_image in selected_images]
 
 def random_images(all_images, num_images):
     if num_images > len(all_images):
@@ -51,8 +63,8 @@ def random_images(all_images, num_images):
 
 def apply_transform(images, transform):
 
-    transformed_images = [transform(selected_image) for selected_image in images]
-    return transformed_images
+    images = [transform(selected_image) for selected_image in images]
+    return images
 
 def generate_gt(selected_images):
     gt = {

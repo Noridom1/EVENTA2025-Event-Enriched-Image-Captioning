@@ -12,6 +12,7 @@ def main():
     parser.add_argument('--save_path', type=str, required=True, help="Output .pkl file path")
     parser.add_argument('--batch_size', type=int, default=16, help="Batch size for feature extraction")
     parser.add_argument('--num_workers', type=int, default=2, help="Number of workers for feature extraction")
+    parser.add_argument('--start_batch', type=int, default=0, help="The index of the starting batch")
 
 
     args = parser.parse_args()
