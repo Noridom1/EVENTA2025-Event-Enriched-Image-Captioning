@@ -56,14 +56,14 @@ class TokenExtractor():
         all_paths = []
         cnt = 0
 
-        for images, paths in enumerate(tqdm(loader, desc='Extracting features', unit='batch')):
+        for images, paths in tqdm(loader, desc='Extracting features', unit='batch'):
 
             images = images.to(self.device)
             vecs = self._extract_multi_scale(images)
             all_features.append(vecs.cpu().numpy())
             all_paths.extend(paths)
             cnt += 1
-            
+
             # Save progress periodically
             if save_path is not None and cnt % save_progess == 0:
                 feats = np.vstack(all_features)
