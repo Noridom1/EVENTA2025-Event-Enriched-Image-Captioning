@@ -5,7 +5,7 @@ from PIL import Image
 import os
 
 class CustomDataset(Dataset):
-    def __init__(self, image_dir, transform=None):
+    def __init__(self, image_dir, start_batch=0, batch_size=16, transform=None):
         super().__init__()
         self.transform = transform
         self.image_dir = image_dir
@@ -14,6 +14,9 @@ class CustomDataset(Dataset):
             for image_name in os.listdir(self.image_dir)
             if image_name.lower().endswith(('.jpg', '.png', '.jpeg'))
         ])
+        start_img = start_batch * batch_size
+        print(start_img)
+        self.image_paths = self.image_paths[start_img:]
 
     def __len__(self):
         return len(self.image_paths)

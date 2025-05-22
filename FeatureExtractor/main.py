@@ -28,17 +28,18 @@ def main():
     save_path = args.save_path
     batch_size = args.batch_size
     num_workers = args.num_workers
+    start_batch = args.start_batch
 
     model = TokenExtractor(model_path=model_path)
     print("[INFO] Successfully load the model")
 
-    dataset = CustomDataset(image_dir=image_dir, transform=model.transform)
+    dataset = CustomDataset(image_dir=image_dir, transform=model.transform, start_batch=start_batch, batch_size=batch_size)
     print("[INFO] Successfully load the dataset")
     
-    model.extract_dataset(dataset=dataset, batch_size=batch_size, num_workers=num_workers, save_path=save_path)
+    feature_vectors, all_paths = model.extract_dataset(dataset=dataset, batch_size=batch_size, num_workers=num_workers, save_path=save_path)
 
     # feature_vectors, all_paths = model.extract_dataset(dataset=dataset, batch_size=2)
-    # print(feature_vectors.shape)
+    print(feature_vectors.shape)
 
 
 if __name__ == "__main__":
