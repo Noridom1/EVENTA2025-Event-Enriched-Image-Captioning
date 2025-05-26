@@ -3,6 +3,7 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 import numpy as np
 from networks.RetrievalNet import Token
+from SimCLR.model import Model
 from PIL import Image
 import time
 import pickle
@@ -10,9 +11,13 @@ import os
 from tqdm import tqdm
 
 class TokenExtractor():
-    def __init__(self, model_path, device='cuda'):
+    def __init__(self, model_path, device='cuda', model_type="Token"):
         self.device = torch.device(device if torch.cuda.is_available() else 'cpu')
-        self.model = self._load_model(model_path)
+        if model_type == "Token":
+            self.model = self._load_model(model_path)
+        if model_type == "SimCLR":
+            self.model= self._load_SimCLR_model(model_path=model_path)
+        
         self.model.eval()
 
         self.transform = transforms.Compose([
@@ -29,8 +34,18 @@ class TokenExtractor():
         load_result = model.load_state_dict(state_dict)
         # print(state_dict)
     
-        # print("Missing keys:", load_result.missing_keys)
-        # print("Unexpected keys:", load_result.unexpected_keys)
+        print("Missing keys:", load_result.missing_keys)
+        print("Unexpected keys:", load_result.unexpected_keys)
+        return model
+    
+    def _load_SimCLR_model(self, model_path):
+        model = Model().to(self.device)
+        state_dict = torch.load(model_path, map_location='cpu')
+        load_result = model.load_state_dict(state_dict)
+        # print(state_dict)
+    
+        print("Missing keys:", load_result.missing_keys)
+        print("Unexpected keys:", load_result.unexpected_keys)
         return model
     
     @torch.no_grad()

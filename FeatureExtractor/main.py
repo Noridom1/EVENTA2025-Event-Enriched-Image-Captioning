@@ -8,6 +8,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="Extract features and save to .pkl")
     parser.add_argument('--model_path', type=str, required=True, help="Path to the pre-trained model")
+    parser.add_argument('--model_type', type=str, default="Token", help="Token or SimCLR")
     parser.add_argument('--image_dir', type=str, required=True, help="Directory containing images")
     parser.add_argument('--save_path', type=str, required=True, help="Output .pkl file path")
     parser.add_argument('--batch_size', type=int, default=16, help="Batch size for feature extraction")
@@ -29,8 +30,9 @@ def main():
     batch_size = args.batch_size
     num_workers = args.num_workers
     start_batch = args.start_batch
+    model_type = args.model_type
 
-    model = TokenExtractor(model_path=model_path)
+    model = TokenExtractor(model_path=model_path, model_type=model_type)
     print("[INFO] Successfully load the model")
 
     dataset = CustomDataset(image_dir=image_dir, transform=model.transform, start_batch=start_batch, batch_size=batch_size)
