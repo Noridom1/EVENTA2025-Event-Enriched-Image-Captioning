@@ -2,39 +2,17 @@ import time
 import json
 import logging
 import argparse
-import torch
-import psutil
 from torch.utils.data import DataLoader
 from dataset import ArticleDataset
 from summarizer import Summarizer
 from tqdm import tqdm
+from log import *
 
-
-def setup_logging(log_path):
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s | %(levelname)s | %(message)s',
-        handlers=[
-            logging.FileHandler(log_path),
-            logging.StreamHandler()
-        ]
-    )
-
-
-def log_resource_usage():
-    # CPU memory
-    process = psutil.Process()
-    memory_mb = process.memory_info().rss / (1024 * 1024)
-    logging.debug(f"🧠 Memory Usage: {memory_mb:.2f} MB")
-
-    # GPU (if available)
-    if torch.cuda.is_available():
-        gpu_memory = torch.cuda.memory_allocated() / (1024 * 1024)
-        logging.debug(f"🟩 GPU Memory Allocated: {gpu_memory:.2f} MB")
-        logging.debug(f"GPU Device: {torch.cuda.get_device_name()}")
-    else:
-        logging.debug("🟥 GPU not available")
-
+def collate_fn(batch):
+    return {
+        "id": [item["id"] for item in batch],
+        "text": [item["text"] for item in batch]
+    }
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Summarize articles with a pre-trained model")
@@ -72,7 +50,12 @@ def main():
     summarizer.load_model()
     logging.info("🤖 Summarizer model loaded.")
 
-    dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=False)
+    dataloader = DataLoader(
+        dataset,
+        batch_size=args.batch_size,
+        shuffle=False,
+        collate_fn=collate_fn
+    )
 
     # Load existing summaries
     with open(args.to_summarize, 'r', encoding='utf-8') as f:
@@ -80,31 +63,29 @@ def main():
 
     save_counter = 0
     
-    for article in tqdm(dataloader, desc="Summarizing Articles"):
-        article_id = article['id'][0]
-        text = article['text'][0]
+    for batch_idx, batch in enumerate(tqdm(dataloader)):
+        article_ids = batch['id']
+        texts = batch['text']
 
-        log_resource_usage()
+        log_gpu_memory(f"Batch {batch_idx+1}")
 
         try:
-            summary = summarizer.summarize(text)
+            summaries = summarizer.summarize_batch(texts)
         except Exception as e:
-            logging.warning(f"❌ Error summarizing article {article_id}: {e}")
+            logging.warning(f"❌ Error summarizing batch: {e}")
             continue
 
-        to_summarize_dict[article_id]["summarized_content"] = summary
-        save_counter += 1
-
-        logging.info(f"✅ Summarized {article_id}")
+        for article_id, summary in zip(article_ids, summaries):
+            to_summarize_dict[article_id]["summarized_content"] = summary
+            save_counter += 1
+            logging.info(f"✅ Summarized {article_id}")
 
         time.sleep(0.1)
 
-        # Periodic save
         if save_counter % args.save_interval == 0:
             with open(args.to_summarize, 'w', encoding='utf-8') as f:
                 json.dump(to_summarize_dict, f, indent=2, ensure_ascii=False)
             logging.info(f"💾 Progress saved after {save_counter} articles.")
-
     # Final save
     with open(args.to_summarize, 'w', encoding='utf-8') as f:
         json.dump(to_summarize_dict, f, indent=2, ensure_ascii=False)

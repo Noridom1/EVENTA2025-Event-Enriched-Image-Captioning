@@ -18,9 +18,9 @@ class Summarizer:
         print("Model loaded successfully.")
 
     def format_prompt(self, article_text):
-        return f"Please summarize the following article:\n\n{article_text}"
+        return f"Summarize this article. Only return plain text with no formatting:\n\n{article_text}"
 
-    def summarize(self, article_text, max_new_tokens=1024):
+    def summarize(self, article_text, max_new_tokens=5000):
         if not self.tokenizer or not self.model:
             raise ValueError("Model is not loaded. Call `load_model()` first.")
 
@@ -40,9 +40,15 @@ class Summarizer:
 
         generated_ids = self.model.generate(
             **model_inputs,
-            max_new_tokens=max_new_tokens
+            max_new_tokens=max_new_tokens,        # Controls output length
+            do_sample=True,                       # Enable sampling for diversity
+            temperature=0.7,                      # Lower = more focused; higher = more creative
+            top_p=0.9,                            # Nucleus sampling for better output
+            top_k=50,                             # Top-k sampling (optional with top_p)
+            repetition_penalty=1.2,              # Penalize repeating phrases
+            pad_token_id=self.tokenizer.eos_token_id  # Ensure padding doesn't throw an error
         )
-
+        
         output_ids = generated_ids[0][len(model_inputs.input_ids[0]):].tolist()
 
         # Try to extract thinking content if available
@@ -55,3 +61,60 @@ class Summarizer:
         summary_content = self.tokenizer.decode(output_ids[index:], skip_special_tokens=True).strip("\n")
 
         return summary_content
+    
+    def summarize_batch(self, article_texts, max_new_tokens=5000):
+        if not self.tokenizer or not self.model:
+            raise ValueError("Model is not loaded. Call `load_model()` first.")
+
+        prompts = [self.format_prompt(text) for text in article_texts]
+
+        messages_batch = [
+            [{"role": "user", "content": prompt}] for prompt in prompts
+        ]
+
+        texts = [
+            self.tokenizer.apply_chat_template(
+                messages,
+                tokenize=False,
+                add_generation_prompt=True,
+                enable_thinking=True
+            ) for messages in messages_batch
+        ]
+
+        model_inputs = self.tokenizer(
+            texts,
+            return_tensors="pt",
+            padding=True,
+            truncation=True
+        ).to(self.model.device)
+
+        generated_ids = self.model.generate(
+            **model_inputs,
+            max_new_tokens=max_new_tokens,        # Controls output length
+            do_sample=True,                       # Enable sampling for diversity
+            temperature=0.7,                      # Lower = more focused; higher = more creative
+            top_p=0.9,                            # Nucleus sampling for better output
+            top_k=50,                             # Top-k sampling (optional with top_p)
+            repetition_penalty=1.2,              # Penalize repeating phrases
+            pad_token_id=self.tokenizer.eos_token_id  # Ensure padding doesn't throw an error
+        )
+
+        input_lens = [len(input_ids) for input_ids in model_inputs["input_ids"]]
+        outputs = []
+
+        for i, gen_ids in enumerate(generated_ids):
+            output_ids = gen_ids[input_lens[i]:].tolist()
+
+            # Try to find end of thinking section if available
+            try:
+                index = len(output_ids) - output_ids[::-1].index(151668)  # </think>
+            except ValueError:
+                index = 0
+
+            summary_content = self.tokenizer.decode(
+                output_ids[index:], skip_special_tokens=True
+            ).strip("\n")
+
+            outputs.append(summary_content)
+
+        return outputs
