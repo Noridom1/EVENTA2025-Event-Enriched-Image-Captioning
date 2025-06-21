@@ -1,6 +1,9 @@
 import json
 from torch.utils.data import Dataset
 
+def num_words(text):
+    return len(text.split(' '))
+
 class ArticleDataset(Dataset):
     def __init__(self, database_path, to_summarize_path, content_key="content", summarize_key="summarized_content"):
         """
@@ -31,7 +34,7 @@ class ArticleDataset(Dataset):
 
             # Determine if the summary is empty/missing/null
             summary = summary_data.get(summarize_key, None)
-            if summary in [None, "", "null"]:
+            if summary in [None, "", "null"] or num_words(summary) < 100 or '<think>' in summary:
                 self.articles.append({
                     "id": article_id,
                     "text": article_data[content_key]

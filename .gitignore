@@ -4,3 +4,9 @@ data/*
 results/*
 article_retrieval/*
 FeatureExtractor/pre-trained/R101-Token.pth
+misc
+ArticleSummarization/files/*
+ArticleSummarization/logs/*
+ArticleSummarization/Qwen3-4B/*
+ArticleSummarization/Qwen3-14B/*
+ArticleSummarization/Qwen3-8B/*

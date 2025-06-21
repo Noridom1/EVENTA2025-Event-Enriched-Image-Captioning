@@ -10,7 +10,7 @@ def setup_logging(log_path):
         handlers=[
             logging.FileHandler(log_path),
             logging.StreamHandler()
-        ]
+        ],
     )
 
 def log_resource_usage():

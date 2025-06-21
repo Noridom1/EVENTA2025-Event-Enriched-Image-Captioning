@@ -17,7 +17,7 @@ def generate_to_summarize_from_retrieval(csv_path):
     with open(csv_path, 'r', encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            ids = [row[f'article_id_{i}'].strip() for i in range(1, 6)]
+            ids = [row[f'article_id_{i}'].strip() for i in range(1, 2)]
             for article_id in ids:
                 if article_id:
                     article_ids.add(article_id)
@@ -26,17 +26,18 @@ def generate_to_summarize_from_retrieval(csv_path):
 
 # Paths
 gt_train_path = '../data/train/gt_train.csv'
-retrieval_path = 'files/submission.csv'
+retrieval_path = 'files/submission_dino.csv'
 output_path = 'files/to_summarize.json'
 
 # Generate ID sets
-article_ids_train = generate_to_summarize_from_train(gt_train_path)
-print("train:", len(article_ids_train))
+# article_ids_train = generate_to_summarize_from_train(gt_train_path)
+# print("train:", len(article_ids_train))
 article_ids_retrieval = generate_to_summarize_from_retrieval(retrieval_path)
 print("retrieval:", len(article_ids_retrieval))
 
 # Merge sets
-all_article_ids = article_ids_train.union(article_ids_retrieval)
+all_article_ids = article_ids_retrieval
+# all_article_ids = article_ids_train.union(article_ids_retrieval)
 
 # Build output dict
 to_summarize_dict = {article_id: {} for article_id in all_article_ids}

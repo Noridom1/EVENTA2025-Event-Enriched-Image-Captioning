@@ -18,7 +18,7 @@ class Summarizer:
         print("Model loaded successfully.")
 
     def format_prompt(self, article_text):
-        return f"Summarize this article. Only return plain text with no formatting:\n\n{article_text}"
+        return f"Summarize this article in English to capture key but general information about the event in the article. Output in plain text without any formatting:\n\n{article_text}"
 
     def summarize(self, article_text, max_new_tokens=5000):
         if not self.tokenizer or not self.model:
