@@ -16,12 +16,12 @@ def collate_fn(batch):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Summarize articles with a pre-trained model")
-    parser.add_argument('--model', type=str, default='Qwen3-4B', help='Model name')
+    parser.add_argument('--model', type=str, default='Qwen3-14B', help='Model name')
     parser.add_argument('--database', type=str, default='files/database.json', help='Path to the database JSON')
-    parser.add_argument('--to_summarize', type=str, default='files/to_summarize_dino_2.json', help='Path to the to_summarize JSON')
-    parser.add_argument('--log', type=str, default='logs/summarization_dino_2.log', help='Path to log file')
-    parser.add_argument('--batch_size', type=int, default=8, help='Batch size for summarization')
-    parser.add_argument('--save_interval', type=int, default=16, help='Number of articles after which to save')
+    parser.add_argument('--to_summarize', type=str, default='files/to_summarize_giant_raw2.json', help='Path to the to_summarize JSON')
+    parser.add_argument('--log', type=str, default='logs/to_summarize_giant_raw2.log', help='Path to log file')
+    parser.add_argument('--batch_size', type=int, default=1, help='Batch size for summarization')
+    parser.add_argument('--save_interval', type=int, default=8, help='Number of articles after which to save')
     return parser.parse_args()
 
 

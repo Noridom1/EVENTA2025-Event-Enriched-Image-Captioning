@@ -40,13 +40,13 @@ class Summarizer:
 
         generated_ids = self.model.generate(
             **model_inputs,
-            max_new_tokens=max_new_tokens,        # Controls output length
-            do_sample=True,                       # Enable sampling for diversity
-            temperature=0.7,                      # Lower = more focused; higher = more creative
-            top_p=0.9,                            # Nucleus sampling for better output
-            top_k=50,                             # Top-k sampling (optional with top_p)
-            repetition_penalty=1.2,              # Penalize repeating phrases
-            pad_token_id=self.tokenizer.eos_token_id  # Ensure padding doesn't throw an error
+            max_new_tokens=max_new_tokens,
+            do_sample=True,
+            temperature=0.85,
+            top_p=0.8,
+            top_k=50,
+            repetition_penalty=1.05,
+            pad_token_id=self.tokenizer.eos_token_id
         )
         
         output_ids = generated_ids[0][len(model_inputs.input_ids[0]):].tolist()
@@ -90,13 +90,13 @@ class Summarizer:
 
         generated_ids = self.model.generate(
             **model_inputs,
-            max_new_tokens=max_new_tokens,        # Controls output length
-            do_sample=True,                       # Enable sampling for diversity
-            temperature=0.7,                      # Lower = more focused; higher = more creative
-            top_p=0.9,                            # Nucleus sampling for better output
-            top_k=50,                             # Top-k sampling (optional with top_p)
-            repetition_penalty=1.2,              # Penalize repeating phrases
-            pad_token_id=self.tokenizer.eos_token_id  # Ensure padding doesn't throw an error
+            max_new_tokens=max_new_tokens,
+            do_sample=True,
+            temperature=0.85,
+            top_p=0.8,
+            top_k=50,
+            repetition_penalty=1.05,
+            pad_token_id=self.tokenizer.eos_token_id
         )
 
         input_lens = [len(input_ids) for input_ids in model_inputs["input_ids"]]
