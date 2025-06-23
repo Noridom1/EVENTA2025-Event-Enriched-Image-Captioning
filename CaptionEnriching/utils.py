@@ -65,6 +65,6 @@ def get_incompleted(results_path, thr=300):
             cnt += 1
             print(query.get("query_id", "unknown"))
 
-results_path = 'files/query_results_14B_115.json'
-get_incompleted(results_path)
-caption_statistics(results_path, histogram=True)
+# results_path = 'files/query_results_14B_115.json'
+# get_incompleted(results_path)
+# caption_statistics(results_path, histogram=True)

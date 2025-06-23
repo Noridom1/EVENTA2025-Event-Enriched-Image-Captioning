@@ -39,7 +39,8 @@ class CaptionEnricher:
             "The image sometimes seem irrelevant to the article, but try to the context given by the article to generate an appropriate caption.\n"
             "Example: an article talking about a tennis event in the Olympic, but the photo is about the swimming event in such Olympic. "
             "You need to take the scenario of the Olympic to generate the caption for the image relating to swimming.\n"
-            "The output must be plain text without any formatting. The language of the caption MUST BE in English."
+            "The output must be plain text without any formatting. The language of the caption MUST BE in English.\n"
+            "The number of words of a caption should be from 100 to 140 words."
         )
         return sys_prompt
 
