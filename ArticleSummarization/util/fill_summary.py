@@ -1,7 +1,7 @@
 import json
 
-query_path = '../CaptionEnriching/files/query_new.json'
-summary_path = 'files/to_summarize_giant.json'
+query_path = '../CaptionEnriching/files/metadata_final.json'
+summary_path = 'files/to_summarize_final.json'
 
 query = json.load(open(query_path, 'r', encoding='utf-8')) 
 summary = json.load(open(summary_path, 'r', encoding='utf-8')) 

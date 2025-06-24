@@ -21,7 +21,7 @@ def parse_args():
     parser.add_argument('--to_summarize', type=str, default='files/to_summarize_giant_raw2.json', help='Path to the to_summarize JSON')
     parser.add_argument('--log', type=str, default='logs/to_summarize_giant_raw2.log', help='Path to log file')
     parser.add_argument('--batch_size', type=int, default=1, help='Batch size for summarization')
-    parser.add_argument('--save_interval', type=int, default=8, help='Number of articles after which to save')
+    parser.add_argument('--save_interval', type=int, default=4, help='Number of articles after which to save')
     return parser.parse_args()
 
 

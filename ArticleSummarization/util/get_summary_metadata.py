@@ -1,7 +1,7 @@
 import json
 
-metadata_path = '../CaptionEnriching/files/query_results_new.json'
-to_summarize_giant_path = 'files/to_summarize_giant_check.json'
+metadata_path = '../CaptionEnriching/files/metadata_magic.json'
+to_summarize_giant_path = 'files/to_summarize_magic.json'
 
 # Load the metadata
 with open(metadata_path, "r", encoding="utf-8") as f:
