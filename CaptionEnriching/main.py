@@ -6,7 +6,7 @@ import os
 from tqdm import tqdm
 from log import *
 from caption_enricher import CaptionEnricher
-from utils import *
+from CaptionEnriching.utils.utils import *
 
 
 def parse_args():

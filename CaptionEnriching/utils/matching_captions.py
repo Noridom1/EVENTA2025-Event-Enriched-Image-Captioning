@@ -9,11 +9,11 @@ from torchvision.io import read_image
 from torchvision.transforms.functional import to_pil_image
 
 # === Paths ===
-metadata_path = 'files/query_results_new.json'
-web_caption_pairs_path = '../DataProcessing/giant_new/image_caption_pairs.json'
-web_images_base_path = '../DataProcessing/giant_new'
-database_images_base_path = '../data/test/R1_img_giant/'
-output_path = 'files/query_results_new_tmp.json'
+metadata_path = 'files/metadata_final.json'
+web_caption_pairs_path = '../DataProcessing/images_final/image_caption_pairs.json'
+web_images_base_path = '../DataProcessing/images_final'
+database_images_base_path = '../data/test/R1_final/'
+output_path = 'files/metadata_final_captions.json'
 
 # === Load JSONs ===
 with open(metadata_path, 'r', encoding='utf-8') as f:

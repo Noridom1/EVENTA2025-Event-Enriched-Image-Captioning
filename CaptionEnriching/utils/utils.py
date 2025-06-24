@@ -1,6 +1,5 @@
 import json
 import json
-import matplotlib.pyplot as plt
 import re
 
 
@@ -26,35 +25,6 @@ def is_incompleted(caption_text):
 
 def is_Chinese(caption_text):
     return re.search(r'[\u4e00-\u9fff]', caption_text) is not None
-
-def caption_statistics(results_path, histogram=False): 
-    results = load_json(results_path)
-
-    # Extract lengths of all generated captions
-    caption_lengths = [num_words(result["generated_caption"]) for result in results if "generated_caption" in result]
-
-    if not caption_lengths:
-        print("No captions found.")
-        return
-
-    # Compute statistics
-    mean_length = sum(caption_lengths) / len(caption_lengths)
-    max_length = max(caption_lengths)
-    min_length = min(caption_lengths)
-
-    print(f"Caption Length Statistics:")
-    print(f" - Mean: {mean_length:.2f}")
-    print(f" - Max: {max_length}")
-    print(f" - Min: {min_length}")
-
-    # Plot histogram if requested
-    if histogram:
-        plt.hist(caption_lengths, bins=20, color='skyblue', edgecolor='black')
-        plt.title("Histogram of Caption Lengths")
-        plt.xlabel("Caption Length (words)")
-        plt.ylabel("Frequency")
-        plt.grid(True)
-        plt.show()
 
 def get_incompleted(results_path, thr=300):
     results = load_json(results_path)

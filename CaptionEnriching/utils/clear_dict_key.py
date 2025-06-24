@@ -1,6 +1,6 @@
 import json
 
-path = 'files/chunk_private_new_prompt.json'
+path = 'files/metadata_final_nogencap.json'
 key = 'generated_caption'
 
 with open(path, 'r', encoding='utf-8') as f:
@@ -10,4 +10,4 @@ for query in data:
     query[key] = ''
 
 with open(path, 'w', encoding='utf-8') as f:
-    json.dump(data, f, indent=2)
+    json.dump(data, f, ensure_ascii=False, indent=2)

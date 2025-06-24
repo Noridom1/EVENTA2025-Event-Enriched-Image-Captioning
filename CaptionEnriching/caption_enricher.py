@@ -135,10 +135,10 @@ class CaptionEnricher:
             **model_inputs,
             max_new_tokens=self.max_new_token,
             do_sample=True,
-            temperature=0.85,
-            top_p=0.8,
-            top_k=50,
-            repetition_penalty=1.05,
+            temperature=0.6,
+            top_p=0.95,
+            top_k=20,
+            # repetition_penalty=1.05,
             pad_token_id=self.tokenizer.eos_token_id
         )
 
