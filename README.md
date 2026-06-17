@@ -8,12 +8,12 @@
 </p>
 
 <p align="center">
-  <a href="https://scholar.google.com/citations?user=tvSOtcIAAAAJ&hl=vi"><strong>Thinh-Phuc Nguyen</strong></a>&nbsp;&nbsp;
-  <a href="https://scholar.google.com/citations?user=YGxxJj8AAAAJ&hl=vi&oi=sra"><strong>Thanh-Hai Nguyen</strong></a>&nbsp;&nbsp;
-  <a href="https://scholar.google.com/citations?user=ebEYKMwAAAAJ&hl=vi"><strong>Gia-Huy Dinh</strong></a>&nbsp;&nbsp;
-  <a href="https://scholar.google.com/citations?user=ZsQ2SdQAAAAJ&hl=vi&oi=sra"><strong>Lam-Huy Nguyen</strong></a>&nbsp;&nbsp;
-  <a href="https://scholar.google.com/citations?user=lt2ATkkAAAAJ&hl=vi"><strong>Minh-Triet Tran</strong></a>&nbsp;&nbsp;
-  <a href="https://scholar.google.com/citations?hl=vi&user=n8ZQzx8AAAAJ"><strong>Trung-Nghia Le</strong></a>
+
+[![arXiv](https://img.shields.io/badge/arXiv-2509.01259-b31b1b)](https://arxiv.org/abs/2509.01259)
+[![ACM MM 2025](https://img.shields.io/badge/ACM_MM-2025-blue)](https://doi.org/10.1145/3746027.3762039)
+[![EVENTA 2025](https://img.shields.io/badge/EVENTA_2025-Track_1-yellow)](https://ltnghia.github.io/eventa/eventa-2025/track1)
+![2nd Place](https://img.shields.io/badge/Rank-2nd_Place-orange)
+
 </p>
 
 <p align="center">
