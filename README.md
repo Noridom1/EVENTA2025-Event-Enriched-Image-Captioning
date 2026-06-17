@@ -1,13 +1,6 @@
 # [ACM MM 2025] ReCap: Event-Aware Image Captioning with Article Retrieval and Semantic Gaussian Normalization
 
 <p align="center">
-  <a href="https://arxiv.org/abs/2509.01259"><img src="https://img.shields.io/badge/arXiv-2509.01259-b31b1b?style=flat&logo=arxiv" alt="arXiv"></a>
-  <a href="https://doi.org/10.1145/3746027.3762039"><img src="https://img.shields.io/badge/ACM_MM-2025-blue?style=flat" alt="ACM MM 2025"></a>
-  <a href="https://ltnghia.github.io/eventa/eventa-2025/track1"><img src="https://img.shields.io/badge/EVENTA_2025-Track_1-yellow?style=flat" alt="EVENTA 2025 Track 1"></a>
-  <img src="https://img.shields.io/badge/Rank-2nd_Place-orange?style=flat" alt="2nd Place">
-</p>
-
-<p align="center">
 
 [![arXiv](https://img.shields.io/badge/arXiv-2509.01259-b31b1b)](https://arxiv.org/abs/2509.01259)
 [![ACM MM 2025](https://img.shields.io/badge/ACM_MM-2025-blue)](https://doi.org/10.1145/3746027.3762039)
