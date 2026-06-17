@@ -1,10 +1,10 @@
 # [ACM MM 2025] ReCap: Event-Aware Image Captioning with Article Retrieval and Semantic Gaussian Normalization
 
 <p align="center">
-  <a href="https://arxiv.org/abs/2509.01259"><img src="https://img.shields.io/badge/arXiv-2509.01259-b31b1b.svg" alt="arXiv"></a>
-  <a href="https://doi.org/10.1145/3746027.3762039"><img src="https://img.shields.io/badge/ACM%20MM-2025-blue.svg" alt="ACM MM 2025"></a>
-  <a href="https://ltnghia.github.io/eventa/eventa-2025/track1"><img src="https://img.shields.io/badge/EVENTA%202025-Track%201-gold.svg" alt="EVENTA 2025 Track 1"></a>
-  <img src="https://img.shields.io/badge/Rank-2nd%20Place-orange.svg" alt="2nd Place">
+  <a href="https://arxiv.org/abs/2509.01259"><img src="https://img.shields.io/badge/arXiv-2509.01259-b31b1b" alt="arXiv"></a>
+  <a href="https://doi.org/10.1145/3746027.3762039"><img src="https://img.shields.io/badge/ACM%20MM-2025-blue" alt="ACM MM 2025"></a>
+  <a href="https://ltnghia.github.io/eventa/eventa-2025/track1"><img src="https://img.shields.io/badge/EVENTA%202025-Track%201-yellow" alt="EVENTA 2025 Track 1"></a>
+  <img src="https://img.shields.io/badge/Rank-2nd%20Place-orange" alt="2nd Place">
 </p>
 
 <p align="center">
