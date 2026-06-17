@@ -9,6 +9,15 @@
 </p>
 
 <p align="center">
+  <a href="https://scholar.google.com/citations?user=tvSOtcIAAAAJ&hl=vi"><strong>Thinh-Phuc Nguyen</strong></a>&nbsp;&nbsp;
+  <a href="https://scholar.google.com/citations?user=YGxxJj8AAAAJ&hl=vi&oi=sra"><strong>Thanh-Hai Nguyen</strong></a>&nbsp;&nbsp;
+  <a href="https://scholar.google.com/citations?user=ebEYKMwAAAAJ&hl=vi"><strong>Gia-Huy Dinh</strong></a>&nbsp;&nbsp;
+  <a href="https://scholar.google.com/citations?user=ZsQ2SdQAAAAJ&hl=vi&oi=sra"><strong>Lam-Huy Nguyen</strong></a>&nbsp;&nbsp;
+  <a href="https://scholar.google.com/citations?user=lt2ATkkAAAAJ&hl=vi"><strong>Minh-Triet Tran</strong></a>&nbsp;&nbsp;
+  <a href="https://scholar.google.com/citations?hl=vi&user=n8ZQzx8AAAAJ"><strong>Trung-Nghia Le</strong></a>
+</p>
+
+<p align="center">
   University of Science, Vietnam National University – Ho Chi Minh City
 </p>
 
